@@ -1,0 +1,83 @@
+package sudhir.kleit.timer;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class MainActivity extends ActionBarActivity {
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		Button gotoclck;
+		final EditText time;
+		final EditText increment;
+		gotoclck=(Button)findViewById(R.id.btn_gotoclock);
+		time=(EditText)findViewById(R.id.ed_time);
+		increment=(EditText)findViewById(R.id.ed_increment);
+		
+			
+		gotoclck.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				try {
+					String ti,incr;
+					ti=time.getText().toString();
+					incr=increment.getText().toString();
+					if(ti.length()<=0 && incr.length() <=0){
+						Toast.makeText(getApplicationContext(), "Enter Time and Increment ", Toast.LENGTH_LONG).show();
+					}
+					else{
+						String t,i;
+						t=time.getText().toString();
+						i=increment.getText().toString();
+						
+						Bundle b=new Bundle();
+						b.putString("time", t);
+						b.putString("increment", i);
+						Intent intent=new Intent(getApplicationContext(),ChessClk.class);
+						intent.putExtras(b);
+						startActivity(intent);
+		
+					}
+					
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				
+								
+			}
+		});
+		
+		
+		
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+}

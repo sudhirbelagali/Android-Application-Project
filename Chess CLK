@@ -1,0 +1,164 @@
+package sudhir.kleit.timer;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class ChessClk extends ActionBarActivity {
+	int a,b;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.chessclk);
+		
+		final EditText time_incr,time_decr;
+		Button incr,decr;
+		
+		time_incr=(EditText)findViewById(R.id.ed_playerA);
+		time_decr=(EditText)findViewById(R.id.ed_playerB);
+		
+		incr=(Button)findViewById(R.id.btn_increment);
+		decr=(Button)findViewById(R.id.btn_decrement);
+		
+		try {
+			Intent intent=getIntent();
+			Bundle bun=intent.getExtras();
+			
+			String tmptime = bun.getString("time");
+			String tmpincrement=bun.getString("increment");
+			
+			a=Integer.parseInt(tmptime);
+			b=Integer.parseInt(tmpincrement);
+			
+//			time_decr.setText(tmptime);
+//			time_incr.setText(tmptime);
+			time_decr.setText(String.format("%d:%02d", a, b));
+			time_incr.setText(String.format("%d:%02d", a, b));
+		} catch (Exception e) {
+			// TODO: handle exception
+			Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+		}
+		incr.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+			
+			try {
+				EditText playerAA,playerBB;
+				playerAA=(EditText)findViewById(R.id.ed_playerA);
+				playerBB=(EditText)findViewById(R.id.ed_playerB);
+				
+				String a,b;
+				a=playerAA.getText().toString();
+				b=playerBB.getText().toString();
+				
+				//Toast.makeText(getApplicationContext(), "Player A="+a+ "Player B="+b, Toast.LENGTH_LONG).show();
+				
+				String[] bitsA = a.split(":");
+				String lastOneA = bitsA[bitsA.length-1];
+				String firstoneA=null;
+				for(int i=0;i<bitsA.length-1;i++){
+					firstoneA=bitsA[i];
+					
+				}
+				//Toast.makeText(getApplicationContext(), "A Time="+firstone, Toast.LENGTH_LONG).show();
+				int secA=Integer.parseInt(lastOneA);
+				int timeA=Integer.parseInt(firstoneA);
+								
+				String[] bitsB=b.split(":");
+				String lastoneB=bitsB[bitsB.length-1];
+				String firstoneB=null;
+				for(int i=0;i<bitsB.length-1;i++){
+					firstoneB=bitsA[i];
+					
+				}
+				int secB=Integer.parseInt(lastoneB);
+				int timeB=Integer.parseInt(firstoneB);
+				
+				secB=secB+secA;
+				playerBB.setText(timeB+":"+secB);
+				/*	for(int j=0;j<secA;j++){
+					secA=secA-1;
+				}*/
+				secA=secA-secB;
+				playerAA.setText(timeA+":"+secA);
+				Thread.sleep(1000);
+				//Toast.makeText(getApplicationContext(), "Seconds A="+secA+"Seconds B="+secB, Toast.LENGTH_LONG).show();
+			} catch (Exception e) {
+				// TODO: handle exception
+			Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+			}	
+				
+				
+				
+			}
+		});
+		decr.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				try {
+					EditText playerAA,playerBB;
+					playerAA=(EditText)findViewById(R.id.ed_playerA);
+					playerBB=(EditText)findViewById(R.id.ed_playerB);
+					
+					String a,b;
+					a=playerAA.getText().toString();
+					b=playerBB.getText().toString();
+					
+					//Toast.makeText(getApplicationContext(), "Player A="+a+ "Player B="+b, Toast.LENGTH_LONG).show();
+					
+					String[] bitsA = a.split(":");
+					String lastOneA = bitsA[bitsA.length-1];
+					String firstoneA=null;
+					for(int i=0;i<bitsA.length-1;i++){
+						firstoneA=bitsA[i];
+						
+					}
+					//Toast.makeText(getApplicationContext(), "A Time="+firstone, Toast.LENGTH_LONG).show();
+					int secA=Integer.parseInt(lastOneA);
+					int timeA=Integer.parseInt(firstoneA);
+									
+					String[] bitsB=b.split(":");
+					String lastoneB=bitsB[bitsB.length-1];
+					String firstoneB=null;
+					for(int i=0;i<bitsB.length-1;i++){
+						firstoneB=bitsA[i];
+						
+					}
+					int secB=Integer.parseInt(lastoneB);
+					int timeB=Integer.parseInt(firstoneB);
+					
+					secA=secA+secB;
+					playerAA.setText(timeA+":"+secA);
+					
+					/*for(int j=0;j<secA;j++){
+						secB=secB-1;
+						
+						
+					}*/
+					secB=secB-secA;
+					playerBB.setText(timeB+":"+secB);
+					Thread.sleep(1000);
+					//Toast.makeText(getApplicationContext(), "Seconds A="+secA+"Seconds B="+secB, Toast.LENGTH_LONG).show();
+				} catch (Exception e) {
+					// TODO: handle exception
+				Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+				}
+			}
+		});
+
+		
+		
+		
+		
+		
+	}
+
+}
